@@ -135,7 +135,6 @@ public class DubboRequestHandler implements RequestHandler {
             Type type =parameter.getParameterizedType();
 
             if (method.isJsonType()) {
-//            if (!ClassUtils.isPrimitiveOrWrapper(parameter.getType()) && !parameter.getType().isAssignableFrom(String.class)) {
                 annotations.add(requestBody());
             } else if (parameter.getType().isPrimitive()) {
                 annotations.add(requestParam());

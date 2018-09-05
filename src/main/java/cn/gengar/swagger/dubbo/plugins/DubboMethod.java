@@ -18,7 +18,6 @@ public class DubboMethod {
 
     private final String API_ROUTE = "swagger-dubbo-api";
 
-//    private ServiceConfig metadata;
     private Class<?> serviceInstanceClass;
     private String serviceInterface;
     private Method method;
