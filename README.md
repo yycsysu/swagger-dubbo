@@ -1,6 +1,6 @@
 # Swagger Dubbo
 
-Use swagger to show Dubbo API as RESTful API.
+Swagger Dubbo makes Dubbo Service show as Swagger RESTful API, which makes it easy to document and test.
 
 ## Dependencies
 
