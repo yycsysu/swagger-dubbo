@@ -1,36 +1,44 @@
 buildscript {
-	ext {
-		swaggerVersion = '2.9.2'
-		dubboVersion = '2.5.3'
-		jacksonVersion = '2.9.6'
-	}
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-	}
+    ext {
+        swaggerVersion = '2.9.2'
+        dubboVersion = '2.6.3'
+        jacksonVersion = '2.9.6'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+    }
 }
 
 apply plugin: 'java'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
 
 group = 'cn.gengar'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-Beta-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
-	mavenCentral()
-	mavenLocal()
+    mavenCentral()
+    mavenLocal()
 }
 
 
 dependencies {
-	compileOnly("io.springfox:springfox-swagger2:$swaggerVersion")
-	compileOnly("io.springfox:springfox-swagger-ui:$swaggerVersion")
-	compileOnly("com.alibaba:dubbo:$dubboVersion")
-	compileOnly("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
+    compileOnly("io.springfox:springfox-swagger2:$swaggerVersion")
+    compileOnly("io.springfox:springfox-swagger-ui:$swaggerVersion")
+    compileOnly("com.alibaba:dubbo:$dubboVersion")
+    compileOnly("com.fasterxml.jackson.core:jackson-databind:$jacksonVersion")
     compileOnly 'org.springframework:spring-core:4.3.8.RELEASE'
-	compileOnly 'org.springframework:spring-web:4.3.8.RELEASE'
-	compileOnly 'org.springframework:spring-webmvc:4.3.8.RELEASE'
-	compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+    compileOnly 'org.springframework:spring-web:4.3.8.RELEASE'
+    compileOnly 'org.springframework:spring-webmvc:4.3.8.RELEASE'
+    compileOnly 'javax.servlet:javax.servlet-api:3.1.0'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+        html.enabled false
+    }
 }

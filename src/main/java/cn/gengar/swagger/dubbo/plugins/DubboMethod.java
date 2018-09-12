@@ -2,6 +2,8 @@ package cn.gengar.swagger.dubbo.plugins;
 
 import cn.gengar.swagger.dubbo.utils.ClassUtils;
 import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.config.model.ProviderMethodModel;
+import com.alibaba.dubbo.config.model.ProviderModel;
 import com.google.common.base.Strings;
 
 import java.lang.reflect.Method;
@@ -51,6 +53,32 @@ public class DubboMethod {
         this.serviceInterface = url.getServiceInterface();
 
         this.method = initMethod(method);
+
+        this.protocol = url.getProtocol();
+        this.host = url.getHost();
+        this.port = url.getPort();
+        this.password = url.getPassword();
+        this.username = url.getUsername();
+
+        this.group = url.getParameter("group");
+        this.version = url.getParameter("version");
+
+        this.order = order;
+        this.context = context;
+        this.hasOverload = hasOverload;
+    }
+
+    public DubboMethod(ProviderModel model,
+                       URL url,
+                       ProviderMethodModel method,
+                       int order,
+                       boolean hasOverload,
+                       String context) {
+        this.serviceInstanceClass = model.getServiceInstance().getClass();
+
+        this.serviceInterface = url.getServiceInterface();
+
+        this.method = initMethod(method.getMethod());
 
         this.protocol = url.getProtocol();
         this.host = url.getHost();

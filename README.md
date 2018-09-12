@@ -1,10 +1,24 @@
 # Swagger Dubbo
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
 Swagger Dubbo makes Dubbo Service show as Swagger RESTful API, which makes it easy to document and test.
 
 ## Dependencies
 
+Version | Dubbo Version | Swagger Version
+---|---|---|
+0.0.1-Beta| 2.5.3+ | 2.7.0+
+1.0.0-Beta| 2.6.3+| 2.9.2+
+
+## News
+
+- **[2018.9.12]** 0.0.1-Beta Supported Dubbo 2.5.3
+
+- **[2018.9.12]** 1.0.0-Beta Supported Dubbo 2.6.3
+
 ## Get Started
+
+
 
 # License
 

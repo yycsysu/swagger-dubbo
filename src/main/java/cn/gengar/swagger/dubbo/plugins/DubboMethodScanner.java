@@ -1,6 +1,9 @@
 package cn.gengar.swagger.dubbo.plugins;
 
 import com.alibaba.dubbo.common.URL;
+import com.alibaba.dubbo.config.model.ApplicationModel;
+import com.alibaba.dubbo.config.model.ProviderMethodModel;
+import com.alibaba.dubbo.config.model.ProviderModel;
 import com.alibaba.dubbo.rpc.Exporter;
 import com.alibaba.dubbo.rpc.Invoker;
 import com.alibaba.dubbo.rpc.protocol.dubbo.DubboProtocol;
@@ -29,11 +32,41 @@ public class DubboMethodScanner {
     public List<DubboMethod> scan() {
 
         // from already exported
-        List<DubboMethod> methods = scanExporters();
+        List<DubboMethod> methods = scanProvider();
 
         return methods;
     }
 
+    private List<DubboMethod> scanProvider() {
+        synchronized (this) {
+            SwaggerDubboContext.clearMethodCache();
+
+            List<DubboMethod> dubboMethods = new ArrayList<>();
+            for (ProviderModel model : ApplicationModel.allProviderModels()) {
+                List<URL> urls = model.getMetadata().getExportedUrls();
+                for (URL url : urls) {
+                    Map<String, List<ProviderMethodModel>> byMethodName =
+                            model.getAllMethods().stream()
+                                    .collect(Collectors.groupingBy(ProviderMethodModel::getMethodName));
+
+                    for (List<ProviderMethodModel> methods : byMethodName.values()) {
+                        boolean hasOverload = methods.size() > 1;
+                        int order = 0;
+                        for (ProviderMethodModel method : methods) {
+                            DubboMethod dubboMethod = new DubboMethod(model, url, method, order++, hasOverload, context);
+                            dubboMethods.add(dubboMethod);
+
+                            SwaggerDubboContext.putMethod(dubboMethod.getMethodKey(), dubboMethod);
+                        }
+                    }
+                }
+            }
+
+            return dubboMethods;
+        }
+    }
+
+    @Deprecated
     private List<DubboMethod> scanExporters() {
         synchronized (this) {
             SwaggerDubboContext.clearMethodCache();
@@ -69,7 +102,7 @@ public class DubboMethodScanner {
         try {
             Object current = proxy;
             Object next;
-            while ( (next = findLikelyObject(current, "invoker")) != null ) {
+            while ((next = findLikelyObject(current, "invoker")) != null) {
                 current = next;
             }
 
