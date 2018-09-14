@@ -15,8 +15,4 @@ import org.springframework.context.annotation.Configuration;
 })
 public class SwaggerDubboConfiguration {
 
-    @Bean
-    public ObjectMapper objectMapper() {
-        return new ObjectMapper();
-    }
 }
