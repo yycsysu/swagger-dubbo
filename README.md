@@ -6,6 +6,40 @@ Swagger Dubbo makes Dubbo Service show as Swagger RESTful API, which makes it ea
 
 ## Get Started
 
+### Add Maven Dependency
+
+1. Add [Swagger Dependency](https://swagger.io)
+2. Add [Dubbo Denpendency](https://dubbo.incubator.apache.org)
+3. Add Swagger-Dubbo Denpendency:
+
+```mvn
+<dependency>
+    <groupId>cn.gengar</groupId>
+    <artifactId>swagger-dubbo</artifactId>
+    <version>0.0.1-beta</version>
+</dependency>
+```
+
+### Config
+
+```java
+@EnableSwagger2
+@EnableSwaggerDubbo
+@Configuration
+public class SwaggerDubboConfig
+{
+    @Bean
+    public Docket dubboDocket(){
+        return new Docket(DocumentationType.SWAGGER_2)
+                .groupName("dubbo")
+                .select()
+                .apis(DubboRequestHandlerSelectors.any()) //get dubbo api only
+                .paths(PathSelectors.any())
+                .build();
+    }
+}
+```
+
 # License
 
 Copyright [2018] [Gengar Yu]
